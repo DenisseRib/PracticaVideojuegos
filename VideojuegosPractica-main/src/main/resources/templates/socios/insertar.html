@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragmentos/menu :: cabecera('Insertar socio')}"></head>
+<body>
+<nav th:replace="~{fragmentos/menu :: menu}"></nav>
+
+<h1>Insertar socio</h1>
+
+<div class="container">
+    <div class="form">
+        <form th:action="@{/socios/insertar}" method="post">
+            <label for="nombre">Nombre</label>
+            <input type="text" id="nombre" name="nombre" th:value="${nombre}">
+
+            <label for="apellidos">Apellidos</label>
+            <input type="text" id="apellidos" name="apellidos" th:value="${apellidos}">
+
+            <label for="email">Email</label>
+            <input type="email" id="email" name="email" th:value="${email}">
+
+            <!-- [MODIF-15] Aquí se añade el input del campo nuevo del socio -->
+            <label for="fechaNacimiento">Fecha de nacimiento</label>
+            <input type="date" id="fechaNacimiento" name="fechaNacimiento" th:value="${fechaNacimiento}">
+
+            <input type="submit" value="Insertar">
+        </form>
+    </div>
+</div>
+
+<div class="ok" th:if="${mensajeOk}" th:text="${mensajeOk}"></div>
+<div class="error" th:if="${error}" th:text="${error}"></div>
+</body>
+</html>

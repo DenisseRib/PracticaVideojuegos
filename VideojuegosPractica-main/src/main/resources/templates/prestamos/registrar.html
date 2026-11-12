@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragmentos/menu :: cabecera('Registrar préstamo')}"></head>
+<body>
+<nav th:replace="~{fragmentos/menu :: menu}"></nav>
+
+<h1>Registrar préstamo</h1>
+
+<div class="container">
+    <div class="form">
+        <form th:action="@{/prestamos/registrar}" method="post">
+            <label for="idSocio">Socio</label>
+            <select id="idSocio" name="idSocio">
+                <option value="">Selecciona un socio</option>
+                <option th:each="socio : ${listaSocios}"
+                        th:value="${socio.id}"
+                        th:text="${socio.descripcion}"
+                        th:selected="${socio.id == idSocio}"></option>
+            </select>
+
+            <label for="idCopia">Copia</label>
+            <select id="idCopia" name="idCopia">
+                <option value="">Selecciona una copia</option>
+                <option th:each="copia : ${listaCopias}"
+                        th:value="${copia.id}"
+                        th:text="${copia.descripcion}"
+                        th:selected="${copia.id == idCopia}"></option>
+            </select>
+
+            <input type="submit" value="Registrar préstamo">
+        </form>
+    </div>
+</div>
+
+<div class="error" th:if="${error}" th:text="${error}"></div>
+
+<div class="ok" th:if="${prestamoRegistrado}">
+    <h2>Préstamo registrado</h2>
+    <p><strong th:text="${prestamoRegistrado.videojuego}"></strong>
+        (<span th:text="${prestamoRegistrado.plataforma}"></span>, copia <span th:text="${prestamoRegistrado.codigoCopia}"></span>)</p>
+    <p>Socio: <span th:text="${prestamoRegistrado.socio}"></span></p>
+    <p>Préstamo: <span th:text="${prestamoRegistrado.fechaPrestamo}"></span>
+        · Fecha límite: <strong th:text="${prestamoRegistrado.fechaLimite}"></strong></p>
+</div>
+</body>
+</html>

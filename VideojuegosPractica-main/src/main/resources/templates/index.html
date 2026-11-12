@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragmentos/menu :: cabecera('Inicio')}"></head>
+<body>
+<nav th:replace="~{fragmentos/menu :: menu}"></nav>
+
+<h1>GameVault · Biblioteca de videojuegos</h1>
+
+<div class="error" th:if="${error}" th:text="${error}"></div>
+
+<!-- [MODIF-19] Aquí se pinta cada contador del Inicio -->
+<div class="contadores">
+    <div class="contador">
+        <span th:text="${contadores.videojuegos}">0</span>
+        Videojuegos
+    </div>
+    <div class="contador">
+        <span th:text="${contadores.sociosActivos}">0</span>
+        Socios activos
+    </div>
+    <div class="contador">
+        <span th:text="${contadores.prestamosAbiertos}">0</span>
+        Préstamos abiertos
+    </div>
+    <div class="contador vencidos">
+        <span th:text="${contadores.prestamosVencidos}">0</span>
+        Préstamos vencidos
+    </div>
+</div>
+</body>
+</html>

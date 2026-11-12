@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<!--
+    Fragmentos reutilizables. Se usan en todas las vistas así:
+      <head th:replace="~{fragmentos/menu :: cabecera('Título de la página')}"></head>
+      <nav  th:replace="~{fragmentos/menu :: menu}"></nav>
+-->
+<head th:fragment="cabecera(titulo)">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title th:text="${titulo} + ' · GameVault'">GameVault</title>
+    <link rel="stylesheet" th:href="@{/css/index.css}">
+    <link rel="stylesheet" th:href="@{/css/formularios.css}">
+    <link rel="stylesheet" th:href="@{/css/tablas.css}">
+</head>
+<body>
+<!-- [MODIF-23] Menú: añadir una pantalla nueva (ej. listado de copias o de plataformas) = enlace aquí + Controller + Service + DAO + Repository + vista -->
+<nav class="menu" th:fragment="menu">
+    <ul>
+        <li><a th:href="@{/}">Inicio</a></li>
+        <li>Videojuegos
+            <ul>
+                <li><a th:href="@{/videojuegos/listado}">Listar videojuegos</a></li>
+                <li><a th:href="@{/videojuegos/insertar}">Insertar videojuego</a></li>
+            </ul>
+        </li>
+        <li>Socios
+            <ul>
+                <li><a th:href="@{/socios/listado}">Listar socios</a></li>
+                <li><a th:href="@{/socios/insertar}">Insertar socio</a></li>
+            </ul>
+        </li>
+        <li>Préstamos
+            <ul>
+                <li><a th:href="@{/prestamos/registrar}">Registrar préstamo</a></li>
+                <li><a th:href="@{/prestamos/listado}">Listar préstamos</a></li>
+                <li><a th:href="@{/prestamos/devolver}">Devolver préstamo</a></li>
+            </ul>
+        </li>
+    </ul>
+</nav>
+</body>
+</html>

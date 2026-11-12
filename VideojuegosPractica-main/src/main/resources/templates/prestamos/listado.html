@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragmentos/menu :: cabecera('Listado de préstamos')}"></head>
+<body>
+<nav th:replace="~{fragmentos/menu :: menu}"></nav>
+
+<h1>Listado de préstamos</h1>
+
+<div class="error" th:if="${error}" th:text="${error}"></div>
+
+<div class="container">
+    <div class="form">
+        <form th:action="@{/prestamos/listado}" method="get">
+            <label for="socio">Socio</label>
+            <input type="text" id="socio" name="socio" th:value="${socio}">
+
+            <label for="videojuego">Videojuego</label>
+            <input type="text" id="videojuego" name="videojuego" th:value="${videojuego}">
+
+            <label for="estado">Estado</label>
+            <select id="estado" name="estado">
+                <option value="">Todos</option>
+                <option value="EN_PLAZO" th:selected="${estado == 'EN_PLAZO'}">En plazo</option>
+                <option value="VENCIDO" th:selected="${estado == 'VENCIDO'}">Vencidos</option>
+                <option value="DEVUELTO" th:selected="${estado == 'DEVUELTO'}">Devueltos</option>
+            </select>
+
+            <label for="fechaDesde">Préstamo desde</label>
+            <input type="date" id="fechaDesde" name="fechaDesde" th:value="${fechaDesde}">
+
+            <input type="submit" value="Buscar">
+        </form>
+    </div>
+</div>
+
+<table>
+    <thead>
+    <tr>
+        <th>ID</th>
+        <th>Socio</th>
+        <th>Videojuego</th>
+        <th>Plataforma</th>
+        <th>Copia</th>
+        <th>Fecha préstamo</th>
+        <th>Fecha límite</th>
+        <th>Fecha devolución</th>
+        <th>Multa</th>
+        <th>Estado</th>
+        <th>Retraso (días)</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="prestamo : ${listaPrestamos}">
+        <td th:text="${prestamo.id}"></td>
+        <td th:text="${prestamo.socio}"></td>
+        <td th:text="${prestamo.videojuego}"></td>
+        <td th:text="${prestamo.plataforma}"></td>
+        <td th:text="${prestamo.codigoCopia}"></td>
+        <td th:text="${prestamo.fechaPrestamo}"></td>
+        <td th:text="${prestamo.fechaLimite}"></td>
+        <td th:text="${prestamo.fechaDevolucion} ?: '—'"></td>
+        <td th:text="${#numbers.formatDecimal(prestamo.multa != null ? prestamo.multa : 0, 1, 2, 'COMMA')} + ' €'"></td>
+        <td><span class="estado" th:classappend="'estado-' + ${prestamo.estado}" th:text="${prestamo.estado}"></span></td>
+        <td th:text="${prestamo.diasRetraso}"></td>
+    </tr>
+    <tr th:if="${error == null and #lists.isEmpty(listaPrestamos)}">
+        <td colspan="11">No se han encontrado préstamos con esos filtros.</td>
+    </tr>
+    </tbody>
+</table>
+</body>
+</html>
